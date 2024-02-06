@@ -21,7 +21,7 @@ public class SpikeDetectionBlueBack implements VisionProcessor {
    //public static Point CENTER_RED = new Point(395,300);
     //public static Point CENTER_RED = new Point(230,230);
 
-    public static Point CENTER_BLUE = new Point(140,230);
+    public static Point CENTER_BLUE = new Point(100,230);
 
    //public static Point RIGHT_RED = new Point(580,325);
    // public static Point RIGHT_RED = new Point(5,5);

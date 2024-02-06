@@ -154,7 +154,9 @@ public class OpenCvBlueBackCycle extends LinearOpMode {
                 .build();
 
         Trajectory rightpurple = drive.trajectoryBuilder(startPose)
-                .lineToLinearHeading(new Pose2d(4, 32, Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(5, 34, Math.toRadians(-120)))
+
+                //.lineToLinearHeading(new Pose2d(4, 36, Math.toRadians(-120))) //was -105
                 .build();
 
         Trajectory positionleft = drive.trajectoryBuilder(leftpurple.end())
@@ -166,21 +168,21 @@ public class OpenCvBlueBackCycle extends LinearOpMode {
                 .build();
 
         Trajectory leftboard = drive.trajectoryBuilder(positionleft.end())
-                .lineToLinearHeading(new Pose2d(-34, 22, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(-34.5, 22, Math.toRadians(0)))
                 .addTemporalMarker(0, () -> {
                     setAutoPos(1750);
                 })
                 .build();
 
         Trajectory centerboard = drive.trajectoryBuilder(positioncenter.end())
-                .lineToLinearHeading(new Pose2d(-33.5, 28, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(-33.5, 27.25, Math.toRadians(0)))
                 .addTemporalMarker(0, () -> {
                     setAutoPos(1750);
                 })
                 .build();
 
         Trajectory rightboard = drive.trajectoryBuilder(rightpurple.end())
-                .lineToLinearHeading(new Pose2d(-34, 32, Math.toRadians(0)), SampleMecanumDrive.getVelocityConstraint(65, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                .lineToLinearHeading(new Pose2d(-34, 33, Math.toRadians(5)), SampleMecanumDrive.getVelocityConstraint(65, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
 
@@ -206,17 +208,17 @@ public class OpenCvBlueBackCycle extends LinearOpMode {
                 .build();
 
         Trajectory tostackfromleft = drive.trajectoryBuilder(lineupleft.end())
-                .lineToLinearHeading(new Pose2d(74, 47.5, Math.toRadians(0)), SampleMecanumDrive.getVelocityConstraint(55, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                .lineToLinearHeading(new Pose2d(74, 48.5, Math.toRadians(0)), SampleMecanumDrive.getVelocityConstraint(55, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
 
         Trajectory tostackfromcenter = drive.trajectoryBuilder(lineupcenter.end())
-                .lineToLinearHeading(new Pose2d(72, 47.5, Math.toRadians(0)), SampleMecanumDrive.getVelocityConstraint(55, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                .lineToLinearHeading(new Pose2d(72, 48.5, Math.toRadians(0)), SampleMecanumDrive.getVelocityConstraint(55, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
 
         Trajectory tostackfromright = drive.trajectoryBuilder(lineupright.end())
-                .lineToLinearHeading(new Pose2d(72, 47.5, Math.toRadians(0)), SampleMecanumDrive.getVelocityConstraint(55, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                .lineToLinearHeading(new Pose2d(72, 48.5, Math.toRadians(0)), SampleMecanumDrive.getVelocityConstraint(55, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
 
@@ -261,7 +263,7 @@ public class OpenCvBlueBackCycle extends LinearOpMode {
 
 
         Trajectory toboardleft = drive.trajectoryBuilder(throughtrussleft.end())
-                .lineToLinearHeading(new Pose2d(-31, 32, Math.toRadians(0)), SampleMecanumDrive.getVelocityConstraint(55, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                .lineToLinearHeading(new Pose2d(-32, 32, Math.toRadians(0)), SampleMecanumDrive.getVelocityConstraint(55, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .addTemporalMarker(0, () -> {
                     setAutoPos(1825);
