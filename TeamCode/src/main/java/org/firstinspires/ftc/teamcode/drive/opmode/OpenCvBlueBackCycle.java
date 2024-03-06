@@ -358,7 +358,7 @@ public class OpenCvBlueBackCycle extends LinearOpMode {
 
                 sleep(750);
 
-                setAutoPos(0);
+                setAutoPos(5);
 
                 sleep(500);
 
