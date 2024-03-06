@@ -202,17 +202,17 @@ public class OpenCvRedFrontBoard extends LinearOpMode {
                 .build();
 
         Trajectory parkleft = drive.trajectoryBuilder(placeleft.end())
-                .lineToLinearHeading(new Pose2d(83, 4, Math.toRadians(-180)), SampleMecanumDrive.getVelocityConstraint(45, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                .lineToLinearHeading(new Pose2d(86, 0, Math.toRadians(-180)), SampleMecanumDrive.getVelocityConstraint(45, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
 
         Trajectory parkcenter = drive.trajectoryBuilder(placecenter.end())
-                .lineToLinearHeading(new Pose2d(83, 4, Math.toRadians(-180)), SampleMecanumDrive.getVelocityConstraint(45, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                .lineToLinearHeading(new Pose2d(86, 0, Math.toRadians(-180)), SampleMecanumDrive.getVelocityConstraint(45, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
 
         Trajectory parkright = drive.trajectoryBuilder(placeright.end())
-                .lineToLinearHeading(new Pose2d(83, 4, Math.toRadians(-180)), SampleMecanumDrive.getVelocityConstraint(45, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                .lineToLinearHeading(new Pose2d(86, 0, Math.toRadians(-180)), SampleMecanumDrive.getVelocityConstraint(45, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
 
@@ -244,7 +244,7 @@ public class OpenCvRedFrontBoard extends LinearOpMode {
 
                 drive.followTrajectory(placeleft);
 
-                setAutoPos(1850);
+                setAutoPos(1800);
 
                 sleep(500);
 
@@ -252,7 +252,7 @@ public class OpenCvRedFrontBoard extends LinearOpMode {
 
                 sleep(750);
 
-                setAutoPos(5);
+                setAutoPos(15);
 
                 drive.followTrajectory(parkleft);
 
@@ -268,7 +268,7 @@ public class OpenCvRedFrontBoard extends LinearOpMode {
 
                 drive.followTrajectory(placeright);
 
-                setAutoPos(1850);
+                setAutoPos(1800);
 
                 sleep(500);
 
@@ -276,7 +276,7 @@ public class OpenCvRedFrontBoard extends LinearOpMode {
 
                 sleep(750);
 
-                setAutoPos(5);
+                setAutoPos(15);
 
                 drive.followTrajectory(parkright);
 
@@ -290,7 +290,7 @@ public class OpenCvRedFrontBoard extends LinearOpMode {
 
                 drive.followTrajectory(placecenter);
 
-                setAutoPos(1850);
+                setAutoPos(1800);
 
                 sleep(500);
 
@@ -298,7 +298,7 @@ public class OpenCvRedFrontBoard extends LinearOpMode {
 
                 sleep(750);
 
-                setAutoPos(5);
+                setAutoPos(15);
 
                 drive.followTrajectory(parkcenter);
 

@@ -15,7 +15,7 @@ import org.opencv.imgproc.Imgproc;
 
 public class SpikeDetectionRedBack implements VisionProcessor {
     //private final AtomicReference<Bitmap> lastFrame = new AtomicReference<>(Bitmap.createBitmap(1, 1, Bitmap.Config.RGB_565));
-    public static Point LEFT_RED = new Point(500,190);
+    public static Point LEFT_RED = new Point(530,190);
     //public static Point LEFT_BLUE = new Point(145,325);
 
    //public static Point CENTER_RED = new Point(395,300);
