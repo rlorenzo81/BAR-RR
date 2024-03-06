@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.drive.opmode;
 import android.util.Size;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -18,14 +17,14 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.vision.SpikeDetectionBlueBack;
+import org.firstinspires.ftc.teamcode.vision.SpikeDetectionRedBack;
 import org.firstinspires.ftc.vision.VisionPortal;
 
 /*
  * This is an example of a more complex path to really test the tuning.
  */
-@Autonomous(name= "OpenCV Blue BACK CYCLE",group = "drive")
-public class OpenCvBlueBackCycle extends LinearOpMode {
+@Autonomous(name= "RED BACK PARK",group = "drive")
+public class OpenCvRedBackPark extends LinearOpMode {
     //@Override
 
     public DcMotor leftFront = null;
@@ -46,6 +45,12 @@ public class OpenCvBlueBackCycle extends LinearOpMode {
 
     public Servo moveAutoIntake = null;
 
+    public double xValue;
+    public double yValue;
+
+    public double x;
+    public double y;
+
     public static double MIN_POWER_SLIDE = 0;
     public static double HOLD_POWER_SLIDE = 0.1;
     public static double MAX_POWER_SLIDE = 1;
@@ -60,15 +65,9 @@ public class OpenCvBlueBackCycle extends LinearOpMode {
     private int armMotorSteps = 0;
     private int rotMotorSteps = 0;
 
-    public double xValue;
-    public double yValue;
-
-    public double x;
-    public double y;
-
     private ElapsedTime runtime = new ElapsedTime();
 
-    private SpikeDetectionBlueBack spikeDetect;
+    private SpikeDetectionRedBack spikeDetect;
     private VisionPortal portal;
 
 
@@ -146,144 +145,56 @@ public class OpenCvBlueBackCycle extends LinearOpMode {
 
 
         Trajectory leftpurple = drive.trajectoryBuilder(startPose)
-                .lineToLinearHeading(new Pose2d(-7, 29, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(-6, 32, Math.toRadians(90)))
                 .build();
 
         Trajectory centerpurple = drive.trajectoryBuilder(startPose)
-                .lineToLinearHeading(new Pose2d(2, 30, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(0, 29.5, Math.toRadians(0)))
                 .build();
 
         Trajectory rightpurple = drive.trajectoryBuilder(startPose)
-                .lineToLinearHeading(new Pose2d(5, 34, Math.toRadians(-120)))
-
-                //.lineToLinearHeading(new Pose2d(4, 36, Math.toRadians(-120))) //was -105
+                .lineToLinearHeading(new Pose2d(11, 24, Math.toRadians(0)))
                 .build();
 
-        Trajectory positionleft = drive.trajectoryBuilder(leftpurple.end())
-                .lineToLinearHeading(new Pose2d(-6, 20, Math.toRadians(0)))
+        Trajectory leftboard = drive.trajectoryBuilder(leftpurple.end())
+                .lineToLinearHeading(new Pose2d(35.5, 33, Math.toRadians(-180)), SampleMecanumDrive.getVelocityConstraint(65, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
 
-        Trajectory positioncenter = drive.trajectoryBuilder(centerpurple.end())
-                .lineToLinearHeading(new Pose2d(2, 25, Math.toRadians(0)))
-                .build();
-
-        Trajectory leftboard = drive.trajectoryBuilder(positionleft.end())
-                .lineToLinearHeading(new Pose2d(-35, 21, Math.toRadians(0)))
-                .addTemporalMarker(0, () -> {
-                    setAutoPos(1750);
-                })
-                .build();
-
-        Trajectory centerboard = drive.trajectoryBuilder(positioncenter.end())
-                .lineToLinearHeading(new Pose2d(-34.8, 27.75, Math.toRadians(-5)))
-                .addTemporalMarker(0, () -> {
-                    setAutoPos(1700);
-                })
+        Trajectory centerboard = drive.trajectoryBuilder(centerpurple.end())
+                .lineToLinearHeading(new Pose2d(35.5, 27, Math.toRadians(-180)), SampleMecanumDrive.getVelocityConstraint(65, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
 
         Trajectory rightboard = drive.trajectoryBuilder(rightpurple.end())
-                .lineToLinearHeading(new Pose2d(-34, 33, Math.toRadians(5)), SampleMecanumDrive.getVelocityConstraint(65, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                .lineToLinearHeading(new Pose2d(35.5, 20, Math.toRadians(-180)), SampleMecanumDrive.getVelocityConstraint(65, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
 
-        Trajectory lineupleft = drive.trajectoryBuilder(leftboard.end())
-                .lineToLinearHeading(new Pose2d(-13, 53, Math.toRadians(0)), SampleMecanumDrive.getVelocityConstraint(65, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
-                .addTemporalMarker(0, () -> {
-                    setAutoPos(10);
-                })
+        Trajectory leftpark = drive.trajectoryBuilder(leftboard.end())
+                .lineToLinearHeading(new Pose2d( 35, 1, Math.toRadians(-180)))
                 .build();
 
-        Trajectory lineupcenter = drive.trajectoryBuilder(centerboard.end())
-                .lineToLinearHeading(new Pose2d(-13, 53, Math.toRadians(0)), SampleMecanumDrive.getVelocityConstraint(65, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
-                .addTemporalMarker(0, () -> {
-                    setAutoPos(5);
-                })
+        Trajectory centerpark = drive.trajectoryBuilder(centerboard.end())
+                .lineToLinearHeading(new Pose2d( 35, 1, Math.toRadians(-180)))
                 .build();
 
-        Trajectory lineupright = drive.trajectoryBuilder(rightboard.end())
-                .lineToLinearHeading(new Pose2d(-13, 53, Math.toRadians(0)), SampleMecanumDrive.getVelocityConstraint(65, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
+        Trajectory rightpark = drive.trajectoryBuilder(rightboard.end())
+                .lineToLinearHeading(new Pose2d( 35, 1, Math.toRadians(-180)))
                 .build();
 
-        Trajectory tostackfromleft = drive.trajectoryBuilder(lineupleft.end())
-                .lineToLinearHeading(new Pose2d(72.5, 48.5, Math.toRadians(0)), SampleMecanumDrive.getVelocityConstraint(55, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
+        Trajectory lefttuck = drive.trajectoryBuilder(rightboard.end())
+                .lineToLinearHeading(new Pose2d( 40, 1, Math.toRadians(-180)))
                 .build();
-
-        Trajectory tostackfromcenter = drive.trajectoryBuilder(lineupcenter.end())
-                .lineToLinearHeading(new Pose2d(72, 48.5, Math.toRadians(0)), SampleMecanumDrive.getVelocityConstraint(55, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
+        Trajectory centertuck = drive.trajectoryBuilder(rightboard.end())
+                .lineToLinearHeading(new Pose2d( 40, 1, Math.toRadians(-180)))
                 .build();
-
-        Trajectory tostackfromright = drive.trajectoryBuilder(lineupright.end())
-                .lineToLinearHeading(new Pose2d(72, 48.5, Math.toRadians(0)), SampleMecanumDrive.getVelocityConstraint(55, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
-                .build();
-
-        Trajectory backupfromstackleft = drive.trajectoryBuilder(tostackfromleft.end())
-                .lineToLinearHeading(new Pose2d(60, 49, Math.toRadians(0)))
-                .build();
-
-        Trajectory backupfromstackcenter = drive.trajectoryBuilder(tostackfromcenter.end())
-                .lineToLinearHeading(new Pose2d(60, 49, Math.toRadians(0)))
-                .build();
-
-        Trajectory backupfromstackright = drive.trajectoryBuilder(tostackfromright.end())
-                .lineToLinearHeading(new Pose2d(60, 49, Math.toRadians(0)))
-                .build();
-
-        Trajectory backtostackleft = drive.trajectoryBuilder(backupfromstackleft.end())
-                .lineToLinearHeading(new Pose2d(74, 49, Math.toRadians(0)))
-                .build();
-
-        Trajectory backtostackcenter = drive.trajectoryBuilder(backupfromstackcenter.end())
-                .lineToLinearHeading(new Pose2d(74, 49, Math.toRadians(0)))
-                .build();
-
-        Trajectory backtostackright = drive.trajectoryBuilder(backupfromstackright.end())
-                .lineToLinearHeading(new Pose2d(74, 49, Math.toRadians(0)))
-                .build();
-
-        Trajectory throughtrussleft = drive.trajectoryBuilder(backtostackleft.end())
-                .lineToLinearHeading(new Pose2d(-25, 54, Math.toRadians(0)), SampleMecanumDrive.getVelocityConstraint(65, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
-                .build();
-
-        Trajectory throughtrusscenter = drive.trajectoryBuilder(backtostackcenter.end())
-                .lineToLinearHeading(new Pose2d(-13, 54, Math.toRadians(0)), SampleMecanumDrive.getVelocityConstraint(65, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
-                .build();
-
-        Trajectory throughtrussright = drive.trajectoryBuilder(backtostackright.end())
-                .lineToLinearHeading(new Pose2d(-13, 54, Math.toRadians(0)), SampleMecanumDrive.getVelocityConstraint(65, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
+        Trajectory righttuck = drive.trajectoryBuilder(rightboard.end())
+                .lineToLinearHeading(new Pose2d( 40, 1, Math.toRadians(-180)))
                 .build();
 
 
-        Trajectory toboardleft = drive.trajectoryBuilder(throughtrussleft.end())
-                .lineToLinearHeading(new Pose2d(-33, 32, Math.toRadians(0)), SampleMecanumDrive.getVelocityConstraint(55, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
-                .addTemporalMarker(0, () -> {
-                    setAutoPos(2000);
-                })
-                .build();
-
-        Trajectory toboardcenter = drive.trajectoryBuilder(throughtrusscenter.end())
-                .lineToLinearHeading(new Pose2d(-32.5, 31, Math.toRadians(0)), SampleMecanumDrive.getVelocityConstraint(55, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
-                .addTemporalMarker(0, () -> {
-                    setAutoPos(2000);
-                })
-                .build();
-
-        Trajectory toboardright = drive.trajectoryBuilder(throughtrussright.end())
-                .lineToLinearHeading(new Pose2d(-31.5, 20, Math.toRadians(0)), SampleMecanumDrive.getVelocityConstraint(55, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
-                .build();
-
-        spikeDetect = new SpikeDetectionBlueBack();
+        spikeDetect = new SpikeDetectionRedBack();
         portal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
                 .setCameraResolution(new Size(640, 480))
@@ -294,53 +205,31 @@ public class OpenCvBlueBackCycle extends LinearOpMode {
 
 
         waitForStart();
-        SpikeDetectionBlueBack.Position position = spikeDetect.getPos();
+        SpikeDetectionRedBack.Position position = spikeDetect.getPos();
 
         portal.close();
         switch (position) {
             case LEFT:
-
                 drive.followTrajectory(leftpurple);
-
-                drive.followTrajectory(positionleft);
 
                 drive.followTrajectory(leftboard);
 
+                setAutoPos(1650);
+
                 sleep(500);
 
                 trapDoor.setPosition(0.7);
-
-                sleep(750);
-
-                drive.followTrajectory(lineupleft);
-
-                drive.followTrajectory(tostackfromleft);
-
-                trapDoor.setPosition(0.3);
-
-                moveAutoIntake.setPosition(0.22);
-                liftRobot.setPower(-0.3);
-                intake.setPower(-1);
-
                 sleep(1000);
 
-                drive.followTrajectory(backupfromstackleft);
+                //sleep(1000);
 
-                moveAutoIntake.setPosition(0.6);
-                liftRobot.setPower(0);
+                setAutoPos(15);
 
-                drive.followTrajectory(backtostackleft);
-
-                drive.followTrajectory(throughtrussleft);
-
-                drive.followTrajectory(toboardleft);
-
-                trapDoor.setPosition(0.7);
                 sleep(500);
 
-                setAutoPos(0);
+                drive.followTrajectory(leftpark);
 
-                sleep(1000);
+                drive.followTrajectory(lefttuck);
 
 
                 break;
@@ -350,96 +239,50 @@ public class OpenCvBlueBackCycle extends LinearOpMode {
 
                 drive.followTrajectory(rightboard);
 
-                setAutoPos(1750);
+
+                setAutoPos(1650);
 
                 sleep(500);
 
                 trapDoor.setPosition(0.7);
+                sleep(1000);
 
-                sleep(750);
+                //sleep(1000);
 
-                setAutoPos(5);
+                setAutoPos(15);
 
                 sleep(500);
 
-                drive.followTrajectory(lineupright);
+                drive.followTrajectory(rightpark);
 
-                drive.followTrajectory(tostackfromright);
+                drive.followTrajectory(righttuck);
 
-                trapDoor.setPosition(0.3);
-
-                moveAutoIntake.setPosition(0.22);
-                liftRobot.setPower(-0.3);
-                intake.setPower(-1);
-
-                sleep(1000);
-
-                drive.followTrajectory(backupfromstackright);
-
-                moveAutoIntake.setPosition(0.6);
-                liftRobot.setPower(0);
-
-                drive.followTrajectory(backtostackright);
-
-                drive.followTrajectory(throughtrussright);
-
-                drive.followTrajectory(toboardright);
-
-                setAutoPos(2000);
-
-                sleep(500);
-
-                trapDoor.setPosition(0.7);
-
-                sleep(750);
-
-                setAutoPos(0);
-
-                sleep(1000);
 
 
                 break;
             case CENTER:
                 drive.followTrajectory(centerpurple);
 
-                drive.followTrajectory(positioncenter);
-
                 drive.followTrajectory(centerboard);
+
+                setAutoPos(1650);
 
                 sleep(500);
 
                 trapDoor.setPosition(0.7);
-                sleep(750);
-
-                drive.followTrajectory(lineupcenter);
-
-                drive.followTrajectory(tostackfromcenter);
-
-                trapDoor.setPosition(0.3);
-
-                moveAutoIntake.setPosition(0.22);
-                liftRobot.setPower(-0.3);
-                intake.setPower(-1);
-
                 sleep(1000);
 
-                drive.followTrajectory(backupfromstackcenter);
+                //sleep(1000);
 
-                moveAutoIntake.setPosition(0.6);
-                liftRobot.setPower(0);
+                setAutoPos(15);
 
-                drive.followTrajectory(backtostackcenter);
+                sleep(500);
 
-                drive.followTrajectory(throughtrusscenter);
+                drive.followTrajectory(centerpark);
 
-                drive.followTrajectory(toboardcenter);
+                drive.followTrajectory(centertuck);
 
-                trapDoor.setPosition(0.7);
-                sleep(750);
 
-                setAutoPos(0);
-
-                sleep(1000);
 
 
                 break;
@@ -708,36 +551,6 @@ public class OpenCvBlueBackCycle extends LinearOpMode {
  */
 
     }
-
-
-    public void pixelLift(double speed, int liftInches, double timeout3) {
-        int newLiftTarget;
-
-        newLiftTarget = pixelLift2.getCurrentPosition() + liftInches;
-
-        pixelLift2.setTargetPosition(newLiftTarget);
-        pixelLift1.setTargetPosition(newLiftTarget);
-        pixelLift2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        pixelLift1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        runtime.reset();
-
-        pixelLift2.setPower(Math.abs(speed));
-        pixelLift1.setPower(Math.abs(speed));
-
-        while (opModeIsActive() && runtime.milliseconds() < timeout3 && pixelLift2.isBusy()) {
-
-            telemetry.addData("Encoder Counts", "%7d", pixelLift2.getCurrentPosition());
-            telemetry.update();
-        }
-        pixelLift2.setPower(0);
-        pixelLift1.setPower(0);
-
-        pixelLift2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        pixelLift1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-
-    }   // end class
     public void setSlide(int steps) {
         armMotorSteps = Range.clip(steps, MIN_HEIGHT, MAX_HEIGHT);
         pixelLift2.setTargetPosition(armMotorSteps);
@@ -799,4 +612,9 @@ public class OpenCvBlueBackCycle extends LinearOpMode {
             }
         }
     }
+
+
+
+
+
 }
