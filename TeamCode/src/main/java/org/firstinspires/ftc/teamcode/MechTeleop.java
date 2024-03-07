@@ -312,8 +312,8 @@ public class MechTeleop extends OpMode{
         }
 
         if(gamepad1.x){
-            moveAutoIntake.setPosition(0.2); //open
-            liftRobot.setPower(-1);
+            moveAutoIntake.setPosition(0.22); //open
+            liftRobot.setPower(-0.3);
         }
         else if(gamepad1.y){
 
