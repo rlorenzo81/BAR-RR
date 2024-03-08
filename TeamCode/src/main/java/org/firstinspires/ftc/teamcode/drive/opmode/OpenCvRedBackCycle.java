@@ -189,32 +189,32 @@ public class OpenCvRedBackCycle extends LinearOpMode {
                 .build();
 
         Trajectory lineupleft = drive.trajectoryBuilder(leftboard.end())
-                .lineToLinearHeading(new Pose2d(0, 53, Math.toRadians(-180)), SampleMecanumDrive.getVelocityConstraint(50, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                .lineToLinearHeading(new Pose2d(0, 53, Math.toRadians(-180)), SampleMecanumDrive.getVelocityConstraint(65, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
 
         Trajectory lineupcenter = drive.trajectoryBuilder(centerboard.end())
-                .lineToLinearHeading(new Pose2d(5, 53, Math.toRadians(-180)), SampleMecanumDrive.getVelocityConstraint(50, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                .lineToLinearHeading(new Pose2d(5, 53, Math.toRadians(-180)), SampleMecanumDrive.getVelocityConstraint(65, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
 
         Trajectory lineupright = drive.trajectoryBuilder(rightboard.end())
-                .lineToLinearHeading(new Pose2d(5, 53, Math.toRadians(-180)), SampleMecanumDrive.getVelocityConstraint(50, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                .lineToLinearHeading(new Pose2d(5, 53, Math.toRadians(-180)), SampleMecanumDrive.getVelocityConstraint(65, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
 
         Trajectory tostackfromleft = drive.trajectoryBuilder(lineupleft.end())
-                .lineToLinearHeading(new Pose2d(-71.5, 50, Math.toRadians(-180)), SampleMecanumDrive.getVelocityConstraint(55, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                .lineToLinearHeading(new Pose2d(-71, 51, Math.toRadians(-180)), SampleMecanumDrive.getVelocityConstraint(55, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
 
         Trajectory tostackfromcenter = drive.trajectoryBuilder(lineupcenter.end())
-                .lineToLinearHeading(new Pose2d(-71.5, 50, Math.toRadians(-180)), SampleMecanumDrive.getVelocityConstraint(55, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                .lineToLinearHeading(new Pose2d(-71, 51, Math.toRadians(-180)), SampleMecanumDrive.getVelocityConstraint(55, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
 
         Trajectory tostackfromright = drive.trajectoryBuilder(lineupright.end())
-                .lineToLinearHeading(new Pose2d(-71.5, 50, Math.toRadians(-180)), SampleMecanumDrive.getVelocityConstraint(55, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                .lineToLinearHeading(new Pose2d(-71, 51, Math.toRadians(-180)), SampleMecanumDrive.getVelocityConstraint(55, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
 
@@ -258,17 +258,17 @@ public class OpenCvRedBackCycle extends LinearOpMode {
                 .build();
 
         Trajectory toboardleft = drive.trajectoryBuilder(throughtrussleft.end())
-                .lineToLinearHeading(new Pose2d(34, 23, Math.toRadians(-180)), SampleMecanumDrive.getVelocityConstraint(55, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                .lineToLinearHeading(new Pose2d(34, 23, Math.toRadians(-180)), SampleMecanumDrive.getVelocityConstraint(65, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
 
         Trajectory toboardcenter = drive.trajectoryBuilder(throughtrusscenter.end())
-                .lineToLinearHeading(new Pose2d(33.5, 30, Math.toRadians(-180)), SampleMecanumDrive.getVelocityConstraint(55, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                .lineToLinearHeading(new Pose2d(33.5, 30, Math.toRadians(-180)), SampleMecanumDrive.getVelocityConstraint(65, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
 
         Trajectory toboardright = drive.trajectoryBuilder(throughtrussright.end())
-                .lineToLinearHeading(new Pose2d(34.5, 32, Math.toRadians(-180)), SampleMecanumDrive.getVelocityConstraint(55, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                .lineToLinearHeading(new Pose2d(34.5, 32, Math.toRadians(-180)), SampleMecanumDrive.getVelocityConstraint(65, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
 
@@ -313,23 +313,32 @@ public class OpenCvRedBackCycle extends LinearOpMode {
                 trapDoor.setPosition(0.3);
 
                 moveAutoIntake.setPosition(0.23);
-                liftRobot.setPower(-0.3);
-                intake.setPower(-1);
+
+                liftRobot.setPower(-0.1);
 
                 sleep(1000);
 
                 drive.followTrajectory(backupfromstackleft);
 
-                moveAutoIntake.setPosition(0.6);
+
                 liftRobot.setPower(0);
+                intake.setPower(-1);
+
+                moveAutoIntake.setPosition(0.6);
 
                 drive.followTrajectory(backtostackleft);
+
+                moveAutoIntake.setPosition(0.24);
+
+                liftRobot.setPower(-0.1);
+
+                sleep(1000);
 
                 drive.followTrajectory(throughtrussleft);
 
                 drive.followTrajectory(toboardleft);
 
-                setAutoPos(1900);
+                setAutoPos(2200);
                 sleep(500);
 
                 trapDoor.setPosition(0.7);
@@ -373,23 +382,32 @@ public class OpenCvRedBackCycle extends LinearOpMode {
                 trapDoor.setPosition(0.3);
 
                 moveAutoIntake.setPosition(0.23);
-                liftRobot.setPower(-0.3);
-                intake.setPower(-1);
+
+                liftRobot.setPower(-0.1);
 
                 sleep(1000);
 
                 drive.followTrajectory(backupfromstackright);
 
-                moveAutoIntake.setPosition(0.6);
+
                 liftRobot.setPower(0);
+                intake.setPower(-1);
+
+                moveAutoIntake.setPosition(0.6);
 
                 drive.followTrajectory(backtostackright);
+
+                moveAutoIntake.setPosition(0.24);
+
+                liftRobot.setPower(-0.1);
+
+                sleep(1000);
 
                 drive.followTrajectory(throughtrussright);
 
                 drive.followTrajectory(toboardright);
 
-                setAutoPos(1900);
+                setAutoPos(2200);
                 sleep(500);
 
                 trapDoor.setPosition(0.7);
@@ -429,23 +447,32 @@ public class OpenCvRedBackCycle extends LinearOpMode {
                 trapDoor.setPosition(0.3);
 
                 moveAutoIntake.setPosition(0.23);
-                liftRobot.setPower(-0.3);
-                intake.setPower(-1);
+
+                liftRobot.setPower(-0.1);
 
                 sleep(1000);
 
                 drive.followTrajectory(backupfromstackcenter);
 
-                moveAutoIntake.setPosition(0.6);
+
                 liftRobot.setPower(0);
+                intake.setPower(-1);
+
+                moveAutoIntake.setPosition(0.6);
 
                 drive.followTrajectory(backtostackcenter);
+
+                moveAutoIntake.setPosition(0.24);
+
+                liftRobot.setPower(-0.1);
+
+                sleep(1000);
 
                 drive.followTrajectory(throughtrusscenter);
 
                 drive.followTrajectory(toboardcenter);
 
-                setAutoPos(1900);
+                setAutoPos(2200);
                 sleep(500);
 
                 trapDoor.setPosition(0.7);
